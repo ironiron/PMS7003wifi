@@ -1,6 +1,6 @@
 EESchema Schematic File Version 4
 LIBS:PMS7003wifi-cache
-EELAYER 30 0
+EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -305,7 +305,7 @@ $EndComp
 Wire Wire Line
 	5300 4500 5300 4430
 $Comp
-L PMS7003wifi-rescue:DHT11-Sensor U1
+L Sensor:DHT11 U1
 U 1 1 5D0876AC
 P 1430 2070
 F 0 "U1" H 1200 2116 50  0000 R CNN
