@@ -1,0 +1,13 @@
+takes dust, humidity, temperature from sensors
+blink led if to big
+
+controlled by a wifi interface.
+last samples should be stored in flash. graphs etc.
+send email in case of bad air
+(optional) after hard reset make AP for configuration
+
+
+1 task:
+	web interface: control, display, schedule measurements
+	uart: dust sensor (and others if relevent)
+	
