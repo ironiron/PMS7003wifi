@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>240</x>
+      <y>150</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>PMS7003</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>150</y>
+      <w>130</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>/UartDriver/
+	part of PMS7003
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>10</x>
+      <y>260</y>
+      <w>60</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>App</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>70</x>
+      <y>170</y>
+      <w>180</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>160.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>0</x>
+      <y>100</y>
+      <w>200</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>get measurments
+get data validity
+rise flags/ issue warnings etc
+average data
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>90</x>
+      <y>290</y>
+      <w>150</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>set power ON/OFF
+
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>160</y>
+      <w>190</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>310</x>
+      <y>50</y>
+      <w>260</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>async data send/receive.
+Store to buffer. No DMA required. (data received every 1 sec.)
+if required use interrupts.
+
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>290</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Uart hardware</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>190</y>
+      <w>30</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>540</x>
+      <y>290</y>
+      <w>100</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>
+
+
+Unit tests
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

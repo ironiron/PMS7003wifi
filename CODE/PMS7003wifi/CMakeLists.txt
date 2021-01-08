@@ -6,8 +6,7 @@ cmake_minimum_required(VERSION 3.14)
 if("${TARGET}" STREQUAL "unit_tests")
 	project(PMS7003wifi)
 	set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_EXTENSIONS ON)
+	set(CMAKE_CXX_STANDARD_REQUIRED True)
 	########################################################
 	enable_testing()
 	#check if already downloaded. Faster build time, and no internet required
@@ -44,23 +43,14 @@ set(CMAKE_CXX_EXTENSIONS ON)
 	
 	# TESTS                          
 	file(GLOB_RECURSE TEST_SRC *test.cpp)
-#	add_executable(PMS7003wifi_test components/PMS7003/Pms7003_test.cpp test/main_test.cpp )
 	add_executable(PMS7003wifi_test ${TEST_SRC})
-	#message(${TEST_SRC})
 	target_link_libraries(PMS7003wifi_test PUBLIC PMS7003 gtest)
-	#[[
-	add_custom_command(
-	     TARGET PMS7003wifi_test
-	     COMMENT "Run tests"
-	     POST_BUILD 
-	     COMMAND PMS7003wifi_test
-	)
-	]]
-
+	#include(CTest)
+	#add_test(PMS7003wifi_test PMS7003wifi_test)
+	
 else()
 	include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 	project(PMS7003wifi)
-	message("sdasdas")
 	set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 endif()
 

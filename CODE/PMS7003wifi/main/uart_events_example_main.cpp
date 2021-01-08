@@ -32,12 +32,17 @@ static const char *TAG = "uart_events";
  * - Pin assignment: TxD (default), RxD (default)
  */
 
-#define EX_UART_NUM UART_NUM_0
-#define PATTERN_CHR_NUM    (3)         /*!< Set the number of consecutive and identical characters received by receiver which defines a UART pattern*/
+#define EX_UART_NUM UART_NUM_2
+#define PATTERN_CHR_NUM    (1)         /*!< Set the number of consecutive and identical characters received by receiver which defines a UART pattern*/
 
 #define BUF_SIZE (1024)
 #define RD_BUF_SIZE (BUF_SIZE)
 static QueueHandle_t uart0_queue;
+
+/**
+ * Uart 0->Programming
+ * Uart 2->sensor
+ */
 
 static void uart_event_task(void *pvParameters)
 {
@@ -120,6 +125,13 @@ static void uart_event_task(void *pvParameters)
     vTaskDelete(NULL);
 }
 
+////////////////////////////////////////////////////////////
+static void uart_task(void *pvParameters)
+{
+  ESP_LOGI(TAG, "interruptr rx");
+}
+////////////////////////////////////////////////////////////
+
 /********************************************************/
 #define CONFIG_BLINK_GPIO GPIO_NUM_2
 #define BLINK_GPIO CONFIG_BLINK_GPIO
@@ -133,51 +145,61 @@ extern "C"
       /* Configure parameters of an UART driver,
        * communication pins and install the driver */
       uart_config_t uart_config = {
-          .baud_rate = 115200,
+          .baud_rate = 9600,
           .data_bits = UART_DATA_8_BITS,
           .parity = UART_PARITY_DISABLE,
           .stop_bits = UART_STOP_BITS_1,
           .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
       };
       uart_param_config(EX_UART_NUM, &uart_config);
-
-      //Set UART log level
-      esp_log_level_set(TAG, ESP_LOG_INFO);
-      //Set UART pins (using UART0 default pins ie no changes.)
-      uart_set_pin(EX_UART_NUM, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
-      //Install UART driver, and get the queue.
+      uart_set_pin(EX_UART_NUM, GPIO_NUM_17, GPIO_NUM_16, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
       uart_driver_install(EX_UART_NUM, BUF_SIZE * 2, BUF_SIZE * 2, 20, &uart0_queue, 0);
 
-      //Set uart pattern detect function.
-      uart_enable_pattern_det_intr(EX_UART_NUM, '+', PATTERN_CHR_NUM, 10000, 10, 10);
-      //Reset the pattern queue length to record at most 20 pattern positions.
-      uart_pattern_queue_reset(EX_UART_NUM, 20);
 
-      //Create a task to handler UART event from ISR
-  //xTaskCreate(uart_event_task, "uart_event_task", 2048, NULL, 12, NULL);
+      uart_enable_pattern_det_intr(EX_UART_NUM, 0x42, PATTERN_CHR_NUM, 0, 0, 1000);
+      uart_pattern_queue_reset(EX_UART_NUM, 20);
+///////////////
+//      uart_intr_config_t uart_intr= {
+//          .rxfifo_full_thresh=20,
+//          .rx_timeout_thresh=1000
+//      };
+//
+//      uart_intr_config(EX_UART_NUM,uart_intr);
+//      auto retval=uart_enable_rx_intr(EX_UART_NUM);
+//      ESP_LOGI(TAG, "retval=%d",retval);
+//////////////////////////////////////////////////////////////////
+  xTaskCreate(uart_event_task, "uart_event_task", 2048, NULL, 12, NULL);
+
+
       gpio_pad_select_gpio(BLINK_GPIO);
       /* Set the GPIO as a push/pull output */
       gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 
+//
+//      // Configure a temporary buffer for the incoming data
+//      uint8_t *data = (uint8_t *) malloc(BUF_SIZE);
+
+
       while(1) {
           /* Blink off (output low) */
-          auto eee=lala(2,3);
-              if(eee==5)
-                {
-      printf("Turning off xDDdthe LED\n");
-                }
-              else
-                {
-                  printf("nie dzialaa LED\n");
-                }
+
+      printf("...\n");
+
           gpio_set_level(BLINK_GPIO, 0);
 
           vTaskDelay(1000 / portTICK_PERIOD_MS);
           /* Blink on (output high) */
-      printf("Turning onasda the LED\n");
+     // printf("Turning onasda the LED\n");
           gpio_set_level(BLINK_GPIO, 1);
+         // ESP_LOGI(TAG, "uart rx break");
 
-          vTaskDelay(1000 / portTICK_PERIOD_MS);
+          vTaskDelay(100 / portTICK_PERIOD_MS);
+          ///////////////////////////
+        //  int len = uart_read_bytes(UART_NUM_2, data, BUF_SIZE, 20 / portTICK_RATE_MS);
+         // uart_write_bytes(UART_NUM_2, (const char *) data, len);
+         // printf("a=%d \n",data);
+          //printf(data);
+        //  printf("s=%c,%c,%c,%c \n",data[0],data[1],data[2],data[3]);
       }
 
 }
